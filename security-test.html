@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Test - CopyCraft Pro</title>
+    <meta name="description" content="Security testing page for CopyCraft Pro website">
+    
+    <!-- Fonts and CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .security-test-page {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .security-hero {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(102, 126, 234, 0.05) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .security-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .security-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .test-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .test-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        .test-status.active {
+            background: #00aa00;
+            box-shadow: 0 0 10px rgba(0, 170, 0, 0.5);
+        }
+
+        .test-status.inactive {
+            background: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .test-status.warning {
+            background: #ffaa00;
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-button.danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .test-button.warning {
+            background: linear-gradient(135deg, #ffaa00, #ff8c00);
+        }
+
+        .test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .security-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .security-info h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .security-hero h1 {
+                font-size: 2rem;
+            }
+
+            .test-container {
+                padding: 1rem;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="security-test-page">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="logo-text">Copy<span class="logo-accent">Craft</span> Pro</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="security-test.html" class="nav-link active">Security Test</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="security-hero">
+        <div class="container">
+            <h1>Security Test Dashboard</h1>
+            <p>Comprehensive security testing and monitoring for CopyCraft Pro website. Test all security features and monitor system status.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="test-container">
+        <!-- Security Information -->
+        <section class="security-info">
+            <h3><i class="fas fa-shield-alt"></i> Security System Status</h3>
+            <div id="securityStatus" class="info-grid">
+                <!-- Security status will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- IP Blocker Tests -->
+        <section class="test-section">
+            <h2><i class="fas fa-network-wired"></i> IP Blocker & Geolocation Tests</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>IP Detection <span id="ipStatus" class="test-status"></span></h3>
+                    <p>Test IP address detection and geolocation services.</p>
+                    <button class="test-button" onclick="testIPDetection()">Test IP Detection</button>
+                    <button class="test-button" onclick="testGeolocation()">Test Geolocation</button>
+                    <div id="ipResults" class="test-results"></div>
+                </div>
+
+                <div class="test-card">
+                    <h3>Rate Limiting <span id="rateLimitStatus" class="test-status"></span></h3>
+                    <p>Test rate limiting and request throttling.</p>
+                    <button class="test-button" onclick="testRateLimiting()">Test Rate Limiting</button>
+                    <button class="test-button" onclick="resetRateLimits()">Reset Limits</button>
+                    <div id="rateLimitResults" class="test-results"></div>
+        </div>
+        
+                <div class="test-card">
+                    <h3>Country Blocking <span id="countryBlockStatus" class="test-status"></span></h3>
+                    <p>Test country-based access control.</p>
+                    <button class="test-button" onclick="testCountryBlocking()">Test Country Block</button>
+                    <button class="test-button" onclick="showBlockedCountries()">Show Blocked Countries</button>
+                    <div id="countryBlockResults" class="test-results"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Monitoring Tests -->
+        <section class="test-section">
+            <h2><i class="fas fa-eye"></i> Security Monitoring Tests</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>F12 Detection <span id="f12Status" class="test-status"></span></h3>
+                    <p>Test developer tools detection.</p>
+                    <button class="test-button danger" onclick="testF12Detection()">Test F12 Detection</button>
+                    <button class="test-button" onclick="testKeyboardShortcuts()">Test Keyboard Shortcuts</button>
+                    <div id="f12Results" class="test-results"></div>
+                </div>
+
+                <div class="test-card">
+                    <h3>Right-Click Protection <span id="rightClickStatus" class="test-status"></span></h3>
+                    <p>Test right-click context menu blocking.</p>
+                    <button class="test-button danger" onclick="testRightClickProtection()">Test Right-Click Block</button>
+                    <button class="test-button" onclick="testContextMenu()">Test Context Menu</button>
+                    <div id="rightClickResults" class="test-results"></div>
+        </div>
+        
+                <div class="test-card">
+                    <h3>Copy Protection <span id="copyStatus" class="test-status"></span></h3>
+                    <p>Test text selection and copy protection.</p>
+                    <button class="test-button danger" onclick="testCopyProtection()">Test Copy Block</button>
+                    <button class="test-button" onclick="testTextSelection()">Test Text Selection</button>
+                    <div id="copyResults" class="test-results"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced News System Tests -->
+        <section class="test-section">
+            <h2><i class="fas fa-newspaper"></i> Enhanced News System Tests</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>News System Status <span id="newsSystemStatus" class="test-status"></span></h3>
+                    <p>Test enhanced news system functionality.</p>
+                    <button class="test-button" onclick="testNewsSystem()">Test News System</button>
+                    <button class="test-button" onclick="testArticleSearch()">Test Article Search</button>
+                    <div id="newsSystemResults" class="test-results"></div>
+        </div>
+        
+                <div class="test-card">
+                    <h3>Article Aggregation <span id="aggregationStatus" class="test-status"></span></h3>
+                    <p>Test article aggregation and keyword analysis.</p>
+                    <button class="test-button" onclick="testArticleAggregation()">Test Aggregation</button>
+                    <button class="test-button" onclick="testKeywordAnalysis()">Test Keyword Analysis</button>
+                    <div id="aggregationResults" class="test-results"></div>
+        </div>
+    </div>
+        </section>
+
+        <!-- Security Violations Log -->
+        <section class="test-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Security Violations Log</h2>
+            <div id="violationsLog" class="test-results" style="max-height: 300px;">
+                <!-- Violations will be logged here -->
+            </div>
+            <button class="test-button" onclick="clearViolationsLog()">Clear Log</button>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="news-feeds-enhanced.js"></script>
+    <script src="security-enhancement.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // Security Test Functions
+        function updateSecurityStatus() {
+            const statusContainer = document.getElementById('securityStatus');
+            
+            if (window.CopyCraftSecurity) {
+                const config = window.CopyCraftSecurity.config;
+                const state = window.CopyCraftSecurity.state;
+                
+                statusContainer.innerHTML = `
+                    <div class="info-item">
+                        <span class="info-label">Security System:</span>
+                        <span class="info-value">${state.securityEnabled ? 'Active' : 'Inactive'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Current IP:</span>
+                        <span class="info-value">${state.currentIP || 'Unknown'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Country:</span>
+                        <span class="info-value">${state.userCountry || 'Unknown'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Request Count:</span>
+                        <span class="info-value">${state.requestCount}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Form Submissions:</span>
+                        <span class="info-value">${state.formSubmissionCount}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Violations:</span>
+                        <span class="info-value">${state.violations.length}</span>
+                    </div>
+                `;
+            } else {
+                statusContainer.innerHTML = '<div class="info-item"><span class="info-label">Status:</span><span class="info-value">Security system not loaded</span></div>';
+            }
+        }
+
+        function testIPDetection() {
+            const results = document.getElementById('ipResults');
+            results.innerHTML = 'Testing IP detection...\n';
+            
+            if (window.CopyCraftSecurity && window.CopyCraftSecurity.state.currentIP) {
+                results.innerHTML += `✅ IP detected: ${window.CopyCraftSecurity.state.currentIP}\n`;
+                document.getElementById('ipStatus').className = 'test-status active';
+            } else {
+                results.innerHTML += '❌ IP detection failed\n';
+                document.getElementById('ipStatus').className = 'test-status inactive';
+            }
+        }
+
+        function testGeolocation() {
+            const results = document.getElementById('ipResults');
+            results.innerHTML += 'Testing geolocation...\n';
+            
+            if (window.CopyCraftSecurity && window.CopyCraftSecurity.state.userCountry) {
+                results.innerHTML += `✅ Country detected: ${window.CopyCraftSecurity.state.userCountry}\n`;
+            } else {
+                results.innerHTML += '❌ Geolocation failed\n';
+            }
+        }
+
+        function testRateLimiting() {
+            const results = document.getElementById('rateLimitResults');
+            results.innerHTML = 'Testing rate limiting...\n';
+            
+            if (window.CopyCraftSecurity && window.CopyCraftSecurity.checkRateLimit) {
+                const canMakeRequest = window.CopyCraftSecurity.checkRateLimit();
+                results.innerHTML += `Rate limit check: ${canMakeRequest ? '✅ Allowed' : '❌ Blocked'}\n`;
+                document.getElementById('rateLimitStatus').className = canMakeRequest ? 'test-status active' : 'test-status warning';
+            } else {
+                results.innerHTML += '❌ Rate limiting not available\n';
+                document.getElementById('rateLimitStatus').className = 'test-status inactive';
+            }
+        }
+
+        function resetRateLimits() {
+            if (window.CopyCraftSecurity) {
+                window.CopyCraftSecurity.state.requestCount = 0;
+                window.CopyCraftSecurity.state.formSubmissionCount = 0;
+                window.CopyCraftSecurity.state.lastRequestTime = 0;
+                window.CopyCraftSecurity.state.lastFormSubmissionTime = 0;
+                
+                const results = document.getElementById('rateLimitResults');
+                results.innerHTML += '✅ Rate limits reset\n';
+                document.getElementById('rateLimitStatus').className = 'test-status active';
+            }
+        }
+
+        function testCountryBlocking() {
+            const results = document.getElementById('countryBlockResults');
+            results.innerHTML = 'Testing country blocking...\n';
+            
+            if (window.CopyCraftSecurity) {
+                const config = window.CopyCraftSecurity.config;
+                const state = window.CopyCraftSecurity.state;
+                
+                if (state.userCountry) {
+                    const isBlocked = config.ipBlocker.blockedCountries.includes(state.userCountry);
+                    const isAllowed = config.ipBlocker.allowedCountries.includes(state.userCountry);
+                    
+                    results.innerHTML += `Country: ${state.userCountry}\n`;
+                    results.innerHTML += `Blocked: ${isBlocked ? '❌ Yes' : '✅ No'}\n`;
+                    results.innerHTML += `Allowed: ${isAllowed ? '✅ Yes' : '❌ No'}\n`;
+                    
+                    document.getElementById('countryBlockStatus').className = isBlocked ? 'test-status inactive' : 'test-status active';
+                } else {
+                    results.innerHTML += '❌ Country not detected\n';
+                    document.getElementById('countryBlockStatus').className = 'test-status warning';
+                }
+            }
+        }
+
+        function showBlockedCountries() {
+            const results = document.getElementById('countryBlockResults');
+            if (window.CopyCraftSecurity) {
+                const blockedCountries = window.CopyCraftSecurity.config.ipBlocker.blockedCountries;
+                results.innerHTML += `Blocked countries: ${blockedCountries.join(', ')}\n`;
+            }
+        }
+
+        function testF12Detection() {
+            const results = document.getElementById('f12Results');
+            results.innerHTML = 'Testing F12 detection...\n';
+            results.innerHTML += '⚠️ Try opening developer tools (F12) to test detection\n';
+            document.getElementById('f12Status').className = 'test-status active';
+        }
+
+        function testKeyboardShortcuts() {
+            const results = document.getElementById('f12Results');
+            results.innerHTML += 'Testing keyboard shortcuts...\n';
+            results.innerHTML += '⚠️ Try Ctrl+Shift+I, Ctrl+Shift+J, or Ctrl+U\n';
+        }
+
+        function testRightClickProtection() {
+            const results = document.getElementById('rightClickResults');
+            results.innerHTML = 'Testing right-click protection...\n';
+            results.innerHTML += '⚠️ Try right-clicking on this page\n';
+            document.getElementById('rightClickStatus').className = 'test-status active';
+        }
+
+        function testContextMenu() {
+            const results = document.getElementById('rightClickResults');
+            results.innerHTML += 'Context menu should be blocked\n';
+        }
+
+        function testCopyProtection() {
+            const results = document.getElementById('copyResults');
+            results.innerHTML = 'Testing copy protection...\n';
+            results.innerHTML += '⚠️ Try selecting and copying text from this page\n';
+            document.getElementById('copyStatus').className = 'test-status active';
+        }
+
+        function testTextSelection() {
+            const results = document.getElementById('copyResults');
+            results.innerHTML += 'Text selection should be blocked\n';
+        }
+
+        function testNewsSystem() {
+            const results = document.getElementById('newsSystemResults');
+            results.innerHTML = 'Testing enhanced news system...\n';
+            
+            if (window.enhancedNewsSystem) {
+                const articleCount = window.enhancedNewsSystem.allArticles ? window.enhancedNewsSystem.allArticles.length : 0;
+                results.innerHTML += `✅ News system available with ${articleCount} articles\n`;
+                document.getElementById('newsSystemStatus').className = 'test-status active';
+            } else {
+                results.innerHTML += '❌ News system not available\n';
+                document.getElementById('newsSystemStatus').className = 'test-status inactive';
+            }
+        }
+
+        function testArticleSearch() {
+            const results = document.getElementById('newsSystemResults');
+            results.innerHTML += 'Testing article search...\n';
+            
+            if (window.enhancedNewsSystem && window.enhancedNewsSystem.allArticles) {
+                const testQuery = 'technology';
+                const matchingArticles = window.enhancedNewsSystem.allArticles.filter(article => 
+                    article.title && article.title.toLowerCase().includes(testQuery)
+                );
+                results.innerHTML += `Found ${matchingArticles.length} articles matching "technology"\n`;
+            } else {
+                results.innerHTML += '❌ Article search not available\n';
+            }
+        }
+
+        function testArticleAggregation() {
+            const results = document.getElementById('aggregationResults');
+            results.innerHTML = 'Testing article aggregation...\n';
+            
+            if (window.enhancedNewsSystem && window.enhancedNewsSystem.allArticles) {
+                const articles = window.enhancedNewsSystem.allArticles;
+                const categories = {};
+                
+                articles.forEach(article => {
+                    const category = article.category || 'Unknown';
+                    categories[category] = (categories[category] || 0) + 1;
+                });
+                
+                results.innerHTML += `Total articles: ${articles.length}\n`;
+                results.innerHTML += `Categories: ${Object.keys(categories).length}\n`;
+                results.innerHTML += `Category breakdown:\n`;
+                
+                Object.entries(categories).forEach(([category, count]) => {
+                    results.innerHTML += `  ${category}: ${count}\n`;
+                });
+                
+                document.getElementById('aggregationStatus').className = 'test-status active';
+            } else {
+                results.innerHTML += '❌ Article aggregation not available\n';
+                document.getElementById('aggregationStatus').className = 'test-status inactive';
+            }
+        }
+
+        function testKeywordAnalysis() {
+            const results = document.getElementById('aggregationResults');
+            results.innerHTML += 'Testing keyword analysis...\n';
+            
+            if (window.enhancedNewsSystem && window.enhancedNewsSystem.allArticles) {
+                const sampleArticle = window.enhancedNewsSystem.allArticles[0];
+                if (sampleArticle && sampleArticle.title) {
+                    results.innerHTML += `Sample article: "${sampleArticle.title}"\n`;
+                    
+                    // Test keyword extraction
+                    const keywords = extractKeywordsFromHeadline(sampleArticle.title);
+                    results.innerHTML += `Extracted keywords: ${keywords.join(', ')}\n`;
+                }
+            }
+        }
+
+        function clearViolationsLog() {
+            const log = document.getElementById('violationsLog');
+            log.innerHTML = 'Violations log cleared\n';
+            
+            if (window.CopyCraftSecurity) {
+                window.CopyCraftSecurity.state.violations = [];
+            }
+        }
+
+        // Update violations log
+        function updateViolationsLog() {
+            const log = document.getElementById('violationsLog');
+            
+            if (window.CopyCraftSecurity && window.CopyCraftSecurity.state.violations.length > 0) {
+                log.innerHTML = window.CopyCraftSecurity.state.violations.map(violation => 
+                    `[${new Date(violation.timestamp).toLocaleTimeString()}] ${violation.type} - IP: ${violation.ip} - Country: ${violation.country}`
+                ).join('\n');
+            } else {
+                log.innerHTML = 'No violations recorded\n';
+            }
+        }
+
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔒 Security test page loaded');
+            
+            // Update status every 2 seconds
+            setInterval(() => {
+                updateSecurityStatus();
+                updateViolationsLog();
+            }, 2000);
+            
+            // Initial update
+            updateSecurityStatus();
+            updateViolationsLog();
+        });
+    </script>
+</body>
+</html> 

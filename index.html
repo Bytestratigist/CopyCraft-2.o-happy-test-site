@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CopyCraft - Professional Copywriting & News Platform</title>
+    <meta name="description" content="Professional copywriting services with integrated news search and ad revenue optimization">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-pen-fancy"></i> CopyCraft</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#news" class="nav-link">News</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Unified Search Section -->
+    <section class="search-section" id="home">
+        <div class="container">
+            <div class="search-content">
+                <h2>Copy So Good, It Sells Itself</h2>
+                <p>Search across professional copywriting resources and real-time news from Google News</p>
+                
+                <div class="search-box">
+                    <div class="search-input-group">
+                        <input type="text" id="unifiedSearch" placeholder="Search copywriting topics, news, or keywords..." class="search-input">
+                        <button type="button" id="searchBtn" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-options">
+                        <label class="search-option">
+                            <input type="radio" name="searchType" value="copywriting" checked>
+                            <span>Smart Search (Articles + Copywriting)</span>
+                        </label>
+                        <label class="search-option">
+                            <input type="radio" name="searchType" value="news">
+                            <span>Google News Only</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results Section -->
+    <section class="results-section" id="searchResults" style="display: none;">
+        <div class="container">
+            <div class="results-header">
+                <h3>Search Results</h3>
+                <button id="clearResults" class="clear-btn">Clear Results</button>
+            </div>
+            <div id="resultsContainer" class="results-container">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section" id="news">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest News</h2>
+                <p>Stay updated with the latest trends in copywriting and marketing</p>
+            </div>
+            
+            <div class="news-categories">
+                <button class="news-category active" data-category="copywriting">Copywriting</button>
+                <button class="news-category" data-category="marketing">Marketing</button>
+                <button class="news-category" data-category="advertising">Advertising</button>
+                <button class="news-category" data-category="business">Business</button>
+            </div>
+            
+            <div id="newsContainer" class="news-grid">
+                <!-- News items will be loaded here -->
+            </div>
+            
+            <div class="news-loading" id="newsLoading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading news...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Professional Copywriting Services</h2>
+                <p>Comprehensive copywriting solutions for your business growth</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3>Ad Copy</h3>
+                    <p>Compelling advertising copy that converts and drives sales</p>
+                    <ul>
+                        <li>Google Ads</li>
+                        <li>Social Media Ads</li>
+                        <li>Display Advertising</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Website Content</h3>
+                    <p>SEO-optimized website content that ranks and engages</p>
+                    <ul>
+                        <li>Landing Pages</li>
+                        <li>Product Descriptions</li>
+                        <li>About Pages</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Marketing</h3>
+                    <p>Email campaigns that nurture leads and boost conversions</p>
+                    <ul>
+                        <li>Newsletter Content</li>
+                        <li>Drip Campaigns</li>
+                        <li>Promotional Emails</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <h3>Blog Content</h3>
+                    <p>Engaging blog posts that establish authority and drive traffic</p>
+                    <ul>
+                        <li>SEO Articles</li>
+                        <li>Thought Leadership</li>
+                        <li>Industry Insights</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Portfolio</h2>
+                <p>Showcasing successful copywriting projects and results</p>
+            </div>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>E-commerce Brand</h3>
+                        <p>Increased conversion rate by 45% through optimized product descriptions</p>
+                        <div class="portfolio-stats">
+                            <span>45% ↑ Conversion</span>
+                            <span>2.3x ROI</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>SaaS Company</h3>
+                        <p>Generated 300+ qualified leads through targeted email campaigns</p>
+                        <div class="portfolio-stats">
+                            <span>300+ Leads</span>
+                            <span>28% Open Rate</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Local Business</h3>
+                        <p>Achieved first-page Google rankings for 15 target keywords</p>
+                        <div class="portfolio-stats">
+                            <span>15 Keywords</span>
+                            <span>Page 1 Rankings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Started Today</h2>
+                <p>Ready to boost your business with professional copywriting?</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>hello@copycraftpro.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Response Time</h4>
+                            <p>Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="">Select Service</option>
+                            <option value="ad-copy">Ad Copy</option>
+                            <option value="website-content">Website Content</option>
+                            <option value="email-marketing">Email Marketing</option>
+                            <option value="blog-content">Blog Content</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Tell us about your project" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-pen-fancy"></i> CopyCraft</h3>
+                    <p>Professional copywriting services that drive results and boost your business growth.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Ad Copy</a></li>
+                        <li><a href="#services">Website Content</a></li>
+                        <li><a href="#services">Email Marketing</a></li>
+                        <li><a href="#services">Blog Content</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#news">News</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 CopyCraft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ad Space -->
+    <div class="ad-space" id="adSpace">
+        <div class="ad-placeholder">
+            <i class="fas fa-ad"></i>
+            <p>Ad Space</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="news-feeds-enhanced.js"></script>
+    <script src="security-enhancement.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
